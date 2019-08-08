@@ -17,7 +17,8 @@ app.post('/Login', function (req, res) {
     var ID = body['ID'];
     var password = body['password'];
     var result = sql.GetUser(ID, password);
-    console.log(ID, password);
+    console.log(";"+ID+";");
+    console.log(";"+password+";");
     console.log(ID.length, password.length);
     var end = {
         ID: null,
@@ -37,6 +38,13 @@ app.post('/Login', function (req, res) {
         console.log('사용자 접속: '+end.ID);
     }
     
+});
+
+//사용자 정보
+app.get('/User', function(req, res){
+    var userID=req.query.userID;
+    var result=sql.GetUser(userID);
+    res.json(result);
 });
 
 app.get('/Login', function (req, res) {
@@ -130,6 +138,7 @@ app.post('/CreateDeal', function (req, res) {
 app.get('/RecentDeal', function(req, res){
     var userID=req.query.userID;
     var result=sql.GetDealStatus(userID);
+    console.log('거래내역 조회: '+userID);
     res.json(result);
 });
 
@@ -139,6 +148,21 @@ app.get('/DealList', function(req, res){
     var result=sql.GetDealList(userID);
     console.log('거래내역 조회: '+userID);
     res.json(result);
+});
+
+//사용자의 이름과 비밀번호 변경
+app.post("/UpdateUser", function(req, res){
+    var body=req.body;
+    var userID=body['userID'];
+    var name=body['name'];
+    var password=body['newPassword'];
+
+    var result=sql.UpdateUser(userID, name, password);
+    if(result){
+        res.json(OK);
+    } else {
+        res.json(Fail);
+    }
 });
 
 app.listen(3000, function () {

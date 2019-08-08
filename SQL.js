@@ -14,6 +14,11 @@ exports.GetUser = function (ID, password) {
     else
         return null;
 }
+exports.GetUser =function(ID) {
+    var query=`select * from Members where ID='${ID}'`;
+    var result=connection.query(query)[0];
+    return result;
+}
 
 exports.CreateUser = function (ID, name, birth, gender, password) {
     var query = `insert into Members values('${ID}', '${name}', '${birth}', '${gender}', '${password}')`;
@@ -67,6 +72,12 @@ exports.GetDealStatus = function (userID) {
 
 exports.GetDealList=function(userID){
     var query=`select * from Deal where userID='${userID}' order by paydate desc`;
+    var result=connection.query(query);
+    return result;
+}
+
+exports.UpdateUser=function(userID, name, password){
+    var query=`update Members set name='${name}', password='${password}' where ID='${userID}'`;
     var result=connection.query(query);
     return result;
 }
