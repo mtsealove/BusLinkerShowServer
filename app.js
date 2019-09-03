@@ -138,7 +138,7 @@ app.post('/CreateDeal', function (req, res) {
 app.get('/RecentDeal', function(req, res){
     var userID=req.query.userID;
     var result=sql.GetDealStatus(userID);
-    console.log('거래내역 조회: '+userID);
+    console.log('거래내역 개요 조회: '+userID);
     res.json(result);
 });
 
